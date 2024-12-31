@@ -4,7 +4,7 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="image_to_mesh",
+    name="image-to-mesh",
     version="0.0.1",
     install_requires=requirements,
     entry_points={

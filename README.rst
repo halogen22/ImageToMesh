@@ -1,4 +1,4 @@
-STL Generator
+Mesh Generator
 =============
 
 This script is a tool for generating 3D models (e.g., STL files) based on input images. 

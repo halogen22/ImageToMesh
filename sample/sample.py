@@ -1,6 +1,6 @@
 import cv2
 import sys
-sys.path.append("~/imageToStl")
+sys.path.append("~/image_to_mesh")
 
 from image_to_mesh import MeshGenerator
 
