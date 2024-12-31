@@ -1,16 +1,13 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import trimesh
-from trimesh.exchange import export
-from .stl_model import Model3D
+from .mesh_model import MeshModel
 
 
-class STLGenerator:
+class MeshGenerator:
 
     @classmethod
-    def generate_stl(cls, image: np.ndarray, pixel_width: float, thickness: float) -> Model3D:
+    def generate_mesh(cls, image: np.ndarray, pixel_width: float, thickness: float) -> MeshModel:
         """
-        Generate Model3D data from a 2D image.
+        Generate MeshModel data from a 2D image.
 
         Args:
             image (np.ndarray): 2D grayscale image array.
@@ -18,14 +15,14 @@ class STLGenerator:
             thickness (float): Thickness of the bottom plane.
 
         Returns:
-            Model3D: Generated 3D model object.
+            MeshModel: Generated 3D model object.
         """
         image: np.ndarray = cls._load_image(image)
         height: int = image.shape[0]
         width: int = image.shape[1]
         vertices: list[list[float]] = cls._generate_vertices(image, pixel_width, thickness)
         faces: list[list[int]] = cls._generate_faces(height, width)
-        return Model3D(vertices, faces, image)
+        return MeshModel(vertices, faces, image)
 
     @staticmethod
     def _load_image(image: np.ndarray) -> np.ndarray:
@@ -46,24 +43,24 @@ class STLGenerator:
         return image
         
     @staticmethod
-    def _generate_vertices(stl_heights: np.ndarray, pixel_width: float, thickness: float) -> list[list[float]]:
+    def _generate_vertices(heights: np.ndarray, pixel_width: float, thickness: float) -> list[list[float]]:
         """
-        Generate vertices for the STL model.
+        Generate vertices for the mesh model.
 
         Args:
-            stl_heights (np.ndarray): 2D image array.
+            heights (np.ndarray): 2D image array.
             pixel_width (float): Width of each pixel in the model.
             thickness (float): Thickness of the bottom plane.
 
         Returns:
             tuple[list[list[float]], np.ndarray]: List of vertices and height map.
         """
-        height, width = stl_heights.shape
+        height, width = heights.shape
         vertices = []
 
         for y in range(height):
             for x in range(width):
-                z_top = stl_heights[y, x]
+                z_top = heights[y, x]
                 vertices.append([x * pixel_width, y * pixel_width, z_top])
                 z_bottom = -thickness
                 vertices.append([x * pixel_width, y * pixel_width, z_bottom])
