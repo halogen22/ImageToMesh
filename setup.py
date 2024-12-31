@@ -4,12 +4,12 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="imageToStl",
+    name="imageTo3D",
     version="0.0.1",
     install_requires=requirements,
     entry_points={
         "console_scripts": [
-            "imageToStl = imageToStl:main"
+            "imageTo3D = imageTo3D:main"
         ]
     }
 )

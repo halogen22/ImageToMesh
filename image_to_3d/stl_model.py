@@ -5,19 +5,20 @@ import trimesh
 from trimesh.exchange import export
 
 
-class STLModel:
+class Model3D:
 
-    def __init__(self, vertices: np.ndarray, faces: np.ndarray, stl_heights: np.ndarray):
+    def __init__(self, vertices: np.ndarray, faces: np.ndarray, heights: np.ndarray):
         """
-        Initialize the STLModel instance.
+        Initialize the Model3D instance.
 
         Args:
             vertices (np.ndarray): Array of vertex coordinates.
             faces (np.ndarray): Array of face indices.
+            heights (np.ndarray): Height map used for visualization.
         """
         self._vertices: np.ndarray = vertices
         self._faces: np.ndarray = faces
-        self._stl_heights: np.ndarray = stl_heights
+        self._heights: np.ndarray = heights
         self._stl_mesh: trimesh.Trimesh | None = self._convert_mesh()
 
     def _convert_mesh(self) -> None:
@@ -37,32 +38,29 @@ class STLModel:
             self._convert_mesh()
         return self._stl_mesh
 
-    def save_as_stl(self, output_stl: str) -> None:
+    def save_as_stl(self, output_file: str) -> None:
         """
-        Save the STL model as an STL file.
+        Save the 3D model as an file.
 
         Args:
-            output_stl (str): File path to save the STL.
+            output_file (str): File path to save the file(e.g.stl).
         """
-        STL_SIGNATUR: str = "stl"
-        if output_stl.split(".")[-1] != STL_SIGNATUR:
-            output_stl = output_stl + STL_SIGNATUR
-        export.export_mesh(self.get_mesh(), output_stl)
-        print(f"STL file saved as '{output_stl}'.")
+        export.export_mesh(self.get_mesh(), output_file)
+        print(f"File saved as '{output_file}'.")
 
     def description(self) -> None:
-        """Print details of the STL model including volume and mass properties."""
-        stl_mesh: trimesh.Trimesh = self.get_mesh()
-        volume: float = stl_mesh.volume
-        center_of_mass: list[float] = stl_mesh.center_mass
-        inertia: list[list[float]] = stl_mesh.moment_inertia
+        """Print details of the 3D model including volume and mass properties."""
+        mesh: trimesh.Trimesh = self.get_mesh()
+        volume: float = mesh.volume
+        center_of_mass: list[float] = mesh.center_mass
+        inertia: list[list[float]] = mesh.moment_inertia
 
         print(f"Volume: {volume}")
         print(f"Center Mass: {center_of_mass}")
         print(f"Inertia: {inertia}")
 
     def display_3d_view(self) -> None:
-        """Display the 3D view of the STL model."""
+        """Display the 3D view of the 3D model."""
         try:
             self.get_mesh().show()
         except:
@@ -76,11 +74,10 @@ class STLModel:
         Display a top-down 2D view based on the height map.
 
         Args:
-            stl_heights (np.ndarray): Height map used for visualization.
             cmap (str): Colormap to use for visualization. Default is 'viridis'.
         """
         plt.figure(figsize=(10, 10))
-        plt.imshow(self._stl_heights, cmap=cmap, origin='upper')
+        plt.imshow(self._heights, cmap=cmap, origin='upper')
         plt.colorbar(label="Height (z_top values)")
         plt.title("Top-down 2D View (Height Map)")
         plt.xlabel("X")
