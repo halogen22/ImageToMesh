@@ -2,15 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import trimesh
 from trimesh.exchange import export
-from .stl_model import STLModel
+from .stl_model import Model3D
 
 
 class STLGenerator:
 
     @classmethod
-    def generate_stl(cls, image: np.ndarray, pixel_width: float, thickness: float) -> STLModel:
+    def generate_stl(cls, image: np.ndarray, pixel_width: float, thickness: float) -> Model3D:
         """
-        Generate STLModel data from a 2D image.
+        Generate Model3D data from a 2D image.
 
         Args:
             image (np.ndarray): 2D grayscale image array.
@@ -18,14 +18,14 @@ class STLGenerator:
             thickness (float): Thickness of the bottom plane.
 
         Returns:
-            STLModel: Generated STL model object.
+            Model3D: Generated 3D model object.
         """
         image: np.ndarray = cls._load_image(image)
         height: int = image.shape[0]
         width: int = image.shape[1]
         vertices: list[list[float]] = cls._generate_vertices(image, pixel_width, thickness)
         faces: list[list[int]] = cls._generate_faces(height, width)
-        return STLModel(vertices, faces, image)
+        return Model3D(vertices, faces, image)
 
     @staticmethod
     def _load_image(image: np.ndarray) -> np.ndarray:

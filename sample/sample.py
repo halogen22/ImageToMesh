@@ -2,7 +2,7 @@ import cv2
 import sys
 sys.path.append("~/imageToStl")
 
-from image_to_stl import STLGenerator
+from image_to_3d import STLGenerator
 
 
 # Define the image path and parameters
