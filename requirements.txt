@@ -1,5 +1,6 @@
-trimesh==4.5.3
-pillow==11.0.0
-opencv-python==4.10.0.84
-matplotlib==3.10.0
+trimesh>=4.5.3
+pillow>=11.0.0
+opencv-python>=4.10.0.84
+matplotlib>=3.10.0
+numpy>=2.2.1
 pyglet<2
