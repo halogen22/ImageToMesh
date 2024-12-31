@@ -2,7 +2,7 @@ import cv2
 import sys
 sys.path.append("~/imageToStl")
 
-from image_to_3d import STLGenerator
+from image_to_mesh import MeshGenerator
 
 
 # Define the image path and parameters
@@ -22,22 +22,22 @@ if image is None:
 normalized_image = ((image / 255))* 10
 
 # Generate the STL model using the normalized image and parameters
-# The STLGenerator.generate_stl method creates vertices and faces for the 3D representation
-stl_model = STLGenerator.generate_stl(normalized_image, pixel_width, thickness)
+# The MeshGenerator.generate_mesh method creates vertices and faces for the 3D representation
+mesh = MeshGenerator.generate_mesh(normalized_image, pixel_width, thickness)
 
 # Display the generated 3D model for verification
 # Opens an interactive 3D viewer for inspecting the model
-stl_model.display_3d_view()
+mesh.display_3d_view()
 
 # Display the generated 2D model for verification
 # Opens an interactive 2D viewer for inspecting the model
-stl_model.display_2d_view()
+mesh.display_2d_view()
 
 # Print model details such as volume, center of mass, and moment of inertia
 # Useful for confirming the model's physical properties
-stl_model.description()
+mesh.description()
 
 # Save the generated STL model to a file
 # Replace 'output_model.stl' with the desired output file path
 output_stl_path = "./output_model.stl"
-stl_model.save_as_stl(output_stl_path)
+mesh.save_to_file(output_stl_path)

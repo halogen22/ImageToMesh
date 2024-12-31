@@ -3,8 +3,6 @@ import argparse
 import cv2
 import os
 
-from .utils import STLGenerator
-
 
 def main():
     """
@@ -45,12 +43,12 @@ def main():
     # Normalize the image using the user-defined scale
     normalized_image = (image / normalization_scale)
 
-    # Generate the STL model using the normalized image and parameters
-    stl_model = STLGenerator.generate_stl(normalized_image, pixel_width, thickness)
+    # Generate the mesh model using the normalized image and parameters
+    mesh = MeshGenerator.generate_stl(normalized_image, pixel_width, thickness)
 
     try:
-        # Save the STL model to the output path
-        stl_model.save_as_stl(output_path)
-        print(f"STL model successfully saved to '{output_path}'.")
+        # Save the mesh model to the output path
+        mesh.save_as_stl(output_path)
+        print(f"Mesh model successfully saved to '{output_path}'.")
     except Exception as e:
         print(f"Error processing files: {e}")

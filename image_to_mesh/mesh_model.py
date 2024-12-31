@@ -1,15 +1,14 @@
-import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import trimesh
 from trimesh.exchange import export
 
 
-class Model3D:
+class MeshModel:
 
     def __init__(self, vertices: np.ndarray, faces: np.ndarray, heights: np.ndarray):
         """
-        Initialize the Model3D instance.
+        Initialize the MeshModel instance.
 
         Args:
             vertices (np.ndarray): Array of vertex coordinates.
@@ -38,7 +37,7 @@ class Model3D:
             self._convert_mesh()
         return self._stl_mesh
 
-    def save_as_stl(self, output_file: str) -> None:
+    def save_to_file(self, output_file: str) -> None:
         """
         Save the 3D model as an file.
 
